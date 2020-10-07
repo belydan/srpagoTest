@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('layout.master');
+})->name('home');
+
+Route::get('upload/info/sepomex',['as' => 'upload.info.index','uses' => 'UploadInfoSepomexController@index']);
