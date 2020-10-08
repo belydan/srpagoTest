@@ -31,6 +31,7 @@ class ReadLayoutSepomex implements IUploadLayoutCp
      */
     public function readLayout($file)
     {
+        ini_set('memory_limit', '-1');
         try {
             $inputFileType = PHPExcel_IOFactory::identify($file);
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -42,6 +43,8 @@ class ReadLayoutSepomex implements IUploadLayoutCp
                 $data = [];
                 $totaDeFilasConceptos = $objPHPExcel->setActiveSheetIndex($j)->getHighestRow();
                 for ($i = 2; $i <= $totaDeFilasConceptos; $i++) {
+                    if(empty($objPHPExcel->setActiveSheetIndex($j)->getCell('A' . $i)->getValue()))
+                        break;
                     $data['d_codigo']         = $objPHPExcel->setActiveSheetIndex($j)->getCell('A' . $i)->getValue();
                     $data['d_asenta']         = $objPHPExcel->setActiveSheetIndex($j)->getCell('B' . $i)->getValue();
                     $data['d_tipo_asenta']    = $objPHPExcel->setActiveSheetIndex($j)->getCell('C' . $i)->getValue();

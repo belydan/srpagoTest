@@ -15,19 +15,19 @@ class CreateCpsepomexTable extends Migration
     {
         Schema::create('cp_sepomex', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('d_codigo');
-            $table->string('d_asenta',100);
-            $table->string('d_tipo_asenta',50);
-            $table->string('d_mnpio');
-            $table->string('d_estado');
-            $table->string('d_ciudad');
-            $table->char('cp',5);
-            $table->char('c_estado',2);
-            $table->char('c_cp',5);
-            $table->char('c_tipo_asenta',2);
-            $table->char('c_mnpio',3);
-            $table->char('id_asenta_cpcons');
-            $table->string('d_zona',10);
+            $table->integer('d_codigo')->nullable();
+            $table->string('d_asenta',100)->nullable();
+            $table->string('d_tipo_asenta',50)->nullable();
+            $table->string('d_mnpio')->nullable();
+            $table->string('d_estado')->nullable();
+            $table->string('d_ciudad')->nullable();
+            $table->char('cp',5)->nullable();
+            $table->char('c_estado',2)->nullable();
+            $table->char('c_cp',5)->nullable();
+            $table->char('c_tipo_asenta',2)->nullable();
+            $table->char('c_mnpio',3)->nullable();
+            $table->char('id_asenta_cpcons')->nullable();
+            $table->string('d_zona',10)->nullable();
             $table->char('c_cve_ciudad',2)->nullable();
             $table->integer('carga_layout_id')->unsigned();
             $table->foreign('carga_layout_id')->references('id')->on('carga_layouts')->onDelete('cascade');

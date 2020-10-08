@@ -9,7 +9,13 @@ use Illuminate\Http\Request;
 
 class GasolinePriceController extends Controller
 {
-    public function getGasolinePrice(Request $request){
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws RequestException
+     */
+    public function getGasolinePrice(Request $request)
+    {
         $data = $request->all();
         $cp = CpSepomex::with('toFile');
         $querys = [];
@@ -23,13 +29,35 @@ class GasolinePriceController extends Controller
             $querys['d_mnpio'] = $data['municipio'];
         }
 
-        $cps = $cp->appends($querys)->get();
-        $colection = collect($cps);
-        $colection->unique('d_cp')->values()->all();
+        $cp = $cp->paginate(100000);
 
-        //Mediante los datos del usuario se intentara encontrar los datos de dirección y precios.
-        $this->getDataServicePrice($cp);
+        $cps = $cp->appends($querys);
+        foreach ($cps->all() as $cp) {
+            //Mediante los datos del usuario se intentara encontrar los datos de dirección y precios.
+            $dataService = $this->getDataServicePrice($cp->cp);
 
+            $response['estado'] = $data['estado'];
+            $response['municipio'] = $data['municipio'];
+            $response['order'] = $data['order'];
+
+            foreach ($dataService->getData() as $precios) {
+                $direccion = $precios->calle . " Col." . $precios->colonia;
+                $ubicacion = ['longitud' => $precios->longitude, 'latitude' => $precios->latitude];
+                $precios = ['regular' => $precios->regular, 'premium' => $precios->premium, 'diesel' => $precios->dieasel];
+                $response['info'][] = [
+                    'direccion' => $direccion,
+                    'precios' => $precios,
+                    'ubicacion' => $ubicacion
+                ];
+            }
+        }
+        $colletion = collect($response);
+        if(!empty($response['order']) && $response['order'] === 'desc'){
+            $response = $colletion->sortByDesc("info.precios.regular")->toArray();
+        }else{
+            $response = $colletion->sortBy("info.precios.regular")->toArray();
+        }
+        return response()->json($response);
     }
 
     /**
@@ -38,14 +66,15 @@ class GasolinePriceController extends Controller
      * @throws RequestException
      * Obtiene mediante el servicio de precios de gasolina, los datos de los precios así como de su ubicación
      */
-    private function getDataServicePrice($cp){
+    private function getDataServicePrice($cp)
+    {
         $response = new GasolinePricesService($cp);
         try {
             $precios = $response->getAllPrices();
         } catch (RequestException $e) {
-            throw new \Exception("Existio un error al obtener la información del servicio: ",$e->getMessage());
+            throw new \Exception("Existio un error al obtener la información del servicio: ", $e->getMessage());
         }
-        json_decode($precios->body())->results;
-        return response()->json();
+        $precios = json_decode($precios->body())->results;
+        return response()->json($precios);
     }
 }
