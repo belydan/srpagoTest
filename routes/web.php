@@ -18,3 +18,4 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('upload/info/sepomex',['as' => 'upload.info.index','uses' => 'UploadInfoSepomexController@index']);
+Route::post('upload/info/sepomex',['as' => 'upload.info.file','uses' => 'UploadInfoSepomexController@store']);

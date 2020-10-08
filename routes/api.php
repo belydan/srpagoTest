@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('precio/gasolina/{estado?}/{municipio?}/{order}',['']);
+Route::get('precio/gasolina',['uses' => 'GasolinePriceController@getGasolinePrice']);

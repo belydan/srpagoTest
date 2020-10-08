@@ -16,8 +16,9 @@ class CreateCargaLayoutsTable extends Migration
         Schema::create('carga_layouts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('file_name',100);
-            $table->date('upload_date');
-            $table->boolean('loading_status');
+            $table->dateTime('upload_date');
+            $table->integer('num_data_inserted');
+            $table->char('loading_status',20);
             $table->timestamps();
         });
     }
