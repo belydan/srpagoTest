@@ -70,6 +70,8 @@ class ReadLayoutSepomex implements IUploadLayoutCp
         }catch(Exception $e){
             throw new Exception("Existio un problema al cargar layout",$e->getMessage());
         }
+        $this->carga_layout_id->loading_status = 'Terminado';
+        $this->carga_layout_id->save();
     }
 
     /**

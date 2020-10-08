@@ -22,6 +22,7 @@
 
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
 </head>
 <body>
 <nav class="navbar navbar-default">

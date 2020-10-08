@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layout.master');
-})->name('home');
+Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
 
 Route::get('upload/info/sepomex',['as' => 'upload.info.index','uses' => 'UploadInfoSepomexController@index']);
 Route::post('upload/info/sepomex',['as' => 'upload.info.file','uses' => 'UploadInfoSepomexController@store']);
+Route::get('getmunicipios/{estado}',['as' => 'obtener.municipios', 'uses' => 'HomeController@getMunicipios']);
