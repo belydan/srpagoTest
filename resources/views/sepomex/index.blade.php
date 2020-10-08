@@ -41,8 +41,6 @@
                             <td><strong>Num. Registros</strong></td>
                             <td><strong>Fecha Ultima Actualización</strong></td>
                             <td><strong>Estatus</strong></td>
-                            <td><strong>Acciones</strong></td>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -54,22 +52,6 @@
                                 <td>{{ $dato->num_data_inserted }}</td>
                                 <td>{{ $dato->updated_at }}</td>
                                 <td>{{ $dato->loading_status }}</td>
-                                <td>
-                                    <button data-id="{{$dato->id}}" type="button"
-                                            class="btn btn-primary btn-xs detallelayouts"
-                                            data-toggle="modal"
-                                            data-target="#modalLayoutPagos"
-                                            title="LAYOUT PAGOS">
-                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                    </button>
-                                    <button data-id="{{$dato->id}}" type="button"
-                                            class="btn btn-danger btn-xs detallelayoutserror"
-                                            data-toggle="modal"
-                                            data-target="#modalLayoutErrorPagos"
-                                            title="ERRORES TIMBRADO">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>
-                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -81,70 +63,6 @@
                 </div>
                 {!! $data->render() !!}
             </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalLayoutPagos" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Detalle Layout</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="detalleLayoutCp">
-                            <thead>
-                            <th>Id</th>
-                            <th>Nombre archivo</th>
-                            <th>Fecha de carga</th>
-                            <th>Num. Registros</th>
-                            <th>Acciones</th>
-                            </thead>
-                            <tbody id="cuerpoDetalleLayoutCp"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalLayoutErrorPagos" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Detalle Errores</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="ErrorLayoutCp">
-                            <thead>
-                            <th>Id</th>
-                            <th>Nombre archivo</th>
-                            <th>Fecha de carga</th>
-                            <th>Num. Registros</th>
-                            <th>Comp Detalle Error</th>
-                            </thead>
-                            <tbody id="cuerpoErrorLayoutCp"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-
         </div>
     </div>
 
