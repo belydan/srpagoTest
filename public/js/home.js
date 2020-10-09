@@ -8,6 +8,7 @@ $(document).ready(function(){
 });
 
 $("#estado").change(function(){
+    $("#municipio").html('');
     var estado = $("#estado").val();
     var data = {'c_estado':estado};
     $("#carga").show();
