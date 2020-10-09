@@ -39,25 +39,29 @@ $("#buscar").click(function (){
         data: data,
         success:function(result){
             result = result.info;
-            result.forEach(function (item){
-                map.addMarker({
-                    lat: item.ubicacion.latitude,
-                    lng: item.ubicacion.longitud,
-                    title: "Precio de gasolina",
-                    infoWindow: {
-                        content: '<p>Precio Regular:'+ item.precios.regular +'</p><p>Precio Premium:'+ item.precios.premium +'</p><p>Precio Diesel:'+ item.precios.diesel +'</p><p>Dirección:'+ item.direccion +'</p>'
-                    }
+            if(result === undefined){
+                alert("No se encuentran datos disponibles");
+            }else{
+                result.forEach(function (item){
+                    map.addMarker({
+                        lat: item.ubicacion.latitude,
+                        lng: item.ubicacion.longitud,
+                        title: "Precio de gasolina",
+                        infoWindow: {
+                            content: '<p>Precio Regular:'+ item.precios.regular +'</p><p>Precio Premium:'+ item.precios.premium +'</p><p>Precio Diesel:'+ item.precios.diesel +'</p><p>Dirección:'+ item.direccion +'</p>'
+                        }
+                    });
+                    var tr = $("<tr/>").append(
+                        $("<td/>").html(item.direccion),
+                        $("<td/>").html(item.precios.regular),
+                        $("<td/>").html(item.precios.premium),
+                        $("<td/>").html(item.precios.diesel),
+                        $("<td/>").html(item.ubicacion.latitude),
+                        $("<td/>").html(item.ubicacion.longitud),
+                    );
+                    $("#table-data tbody").append(tr);
                 });
-                var tr = $("<tr/>").append(
-                    $("<td/>").html(item.direccion),
-                    $("<td/>").html(item.precios.regular),
-                    $("<td/>").html(item.precios.premium),
-                    $("<td/>").html(item.precios.diesel),
-                    $("<td/>").html(item.ubicacion.latitude),
-                    $("<td/>").html(item.ubicacion.longitud),
-                );
-                $("#table-data tbody").append(tr);
-            });
+            }
             $("#carga").hide();
         }
     });
